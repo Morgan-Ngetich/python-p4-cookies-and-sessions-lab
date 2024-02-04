@@ -22,13 +22,26 @@ def clear_session():
 
 @app.route('/articles')
 def index_articles():
+    # Implement logic to receive and render articles.
+    return jsonify({"message": 'Article endpoint'})
 
-    pass
 
 @app.route('/articles/<int:id>')
 def show_article(id):
-
-    pass
+    # Initialize page_views if it's the first request
+    session['page_views'] = session.get('page_views', 0) + 1
+    
+    # Check if the user has viewed more than 3 pages
+    if session['page_views'] > 3:
+        # Render JSON response fro exceeding page views
+        return jsonify({"message": "Maximum pageview limit reached"}), 401
+    
+    # Retrieve article data (replace this with actual logic to get article data)
+    article_data = {'author': id, 'title': id, 'content': id, 'preview': id, 'minutes_to_read': id, 'date': id}
+    
+    # Render JSON response with article data
+    return jsonify(article_data)
+    
 
 if __name__ == '__main__':
     app.run(port=5555)
